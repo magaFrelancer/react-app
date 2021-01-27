@@ -1,0 +1,39 @@
+.dialogs__menu-item {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color .2s linear;
+    text-decoration: none;
+    color: #000000;
+}
+
+.dialogs__menu-item:hover {
+    background-color: #DADBDE;
+}
+.dialogs__menu-item.active {
+    background-color: #DADBDE;
+}
+
+.dialogs__menu-item:not(:last-child) {
+    border-bottom: 1px solid #bdc3c7;
+}
+
+.dialogs-menu__img-block {
+    width: 90px;
+    margin-right: 20px;
+}
+
+.dialogs-menu__img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.dialogs-menu__info-block {
+    padding: 10px 0;
+}
+
+.dialogs-menu__name {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
