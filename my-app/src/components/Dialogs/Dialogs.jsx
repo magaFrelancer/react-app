@@ -6,12 +6,27 @@ import img from './imgs/new-user.jpg';
 
 
 export default function Dialogs(props) {
+    console.log(props);
+    const newPostElement = React.createRef();
+
+    function onTextChange() {
+        const text = newPostElement.current.value;
+        props.updateNewMessageText(text);
+    }
+    function addNewMessage() {
+        const text = newPostElement.current.value;
+        props.updateNewMessageText(text);
+        props.addMessage(text);
+        props.updateNewMessageText('')
+
+    }
+
     return (
         <section className="dialogs">
             <div className="dialogs__dialogs-block">
                 <h1 className="dialogs__menu-title">Dialogs</h1>
                 <ul className="dialogs__menu">
-                    {props.state.dialogs.map((item,index)=>  (
+                    {props.state.dialogs.map((item, index) => (
                         <DialogItem name={item.name} id={item.id} key={index}/>
                     ))}
                 </ul>
@@ -35,8 +50,9 @@ export default function Dialogs(props) {
                     ))}
                 </div>
                 <div className="message-block__inputs">
-                    <textarea className="message-block__new-message" placeholder="Message..."/>
-                    <button className="message-block__add-new-message">Send</button>
+                    <textarea onChange={onTextChange} ref={newPostElement} className="message-block__new-message"
+                              placeholder="Message..." value={props.state.newMessageText}/>
+                    <button onClick={addNewMessage} className="message-block__add-new-message">Send</button>
                 </div>
 
             </div>

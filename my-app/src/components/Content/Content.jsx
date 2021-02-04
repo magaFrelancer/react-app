@@ -6,8 +6,13 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 export default function Content(props) {
     return (
         <section className="section">
-           <ProfileInfo/>
-            <Posts posts={props.state.posts} addPost={props.addPost}/>
+            <ProfileInfo/>
+            <Posts posts={props.profilePage.posts}
+                   newPostsText={
+                       props.profilePage.newPostText
+                   }
+                   updateNewPostText={props.updateNewPostText}
+                   addPost={props.addPost}/>
         </section>
     )
 }
