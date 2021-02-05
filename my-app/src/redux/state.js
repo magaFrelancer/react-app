@@ -1,80 +1,91 @@
-let rerenderEntireTree = () => {
-        console.log('state')
-    };
+let store = {
+    _state: {
+        profilePage: {
+            posts: [
+                {
+                    id: 1,
+                    message: `Hi`,
+                    date: '20:30'
+                },
+                {
+                    id: 2,
+                    message: `Its My two Post`,
+                    date: '21:40'
+                },
 
-let state = {
-    profilePage: {
-        posts: [
-            {
-                id: 1,
-                message: `Hi`,
-                date: '20:30'
-            },
-            {
-                id: 2,
-                message: `Its My two Post`,
-                date: '21:40'
-            },
+            ],
+            newPostText: 'message...'
+        },
+        messagesPage: {
+            dialogs: [
+                {id: '1', name: 'Magomed'},
+                {id: '2', name: 'Andrey'},
+                {id: '3', name: 'Abu'},
+                {id: '4', name: 'Ahmed'},
+                {id: '5', name: 'Any'},
+                {id: '6', name: 'Abdullah'},
 
-        ],
-        newPostText: 'message...'
+            ],
+            messages: [
+                {
+                    id: 1, message: `Что делаешь?`,
+                    date: '20:30',
+                    from: 'my-message'
+                },
+                {
+                    id: 2, message: `Да нечего`,
+                    date: '21:40',
+                    from: 'his-message'
+                },
+
+            ],
+            newMessageText: 'Привет'
+        }
     },
-    messagesPage: {
-        dialogs: [
-            {id: '1', name: 'Magomed'},
-            {id: '2', name: 'Andrey'},
-            {id: '3', name: 'Abu'},
-            {id: '4', name: 'Ahmed'},
-            {id: '5', name: 'Any'},
-            {id: '6', name: 'Abdullah'},
+    getState() {
+        return this._state;
+    },
+    _callSubscriber() {
+        console.log('state')
+    },
+    addPost() {
+        let newPost = {
+            id: 5,
+            message: this._state.profilePage.newPostText,
+            date: '23:32'
 
-        ],
-        messages: [
-            {
-                id: 1, message: `Что делаешь?`,
-                date: '20:30',
-                from: 'my-message'
-            },
-            {
-                id: 2, message: `Да нечего`,
-                date: '21:40',
-                from: 'his-message'
-            },
+        };
+        this._state.profilePage.posts.push(newPost);
+        this._state.profilePage.newPostText = '';
+        this._callSubscriber(this._state);
+    },
+    updateNewPostText(newText){
 
-        ],
-        newMessageText: 'Привет'
-    }
+        this._state.profilePage.newPostText = newText;
+        this._callSubscriber(this._state);
+    },
+    addMessage(){
+        let newMessage = {
+            id: 1, message: this._state.messagesPage.newMessageText,
+            date: "23:50",
+            from: 'my-message'
+        };
+        this._state.messagesPage.messages.push(newMessage);
+    },
+    updateNewMessageText(newText){
+        this._state.messagesPage.newMessageText = newText;
+        this._callSubscriber(this._state);
+    },
+    subscribe(observer) {
+        this._callSubscriber = observer;
+    },
+
 };
 
-export const    addPost = () => {
-    let newPost = {
-        id: 5,
-        message: state.profilePage.newPostText,
-        date: '23:32'
 
-    };
-    state.profilePage.posts.push(newPost);
-    state.profilePage.newPostText = '';
-    rerenderEntireTree(state);
-};
-export const updateNewPostText = (newText) => {
 
-    state.profilePage.newPostText = newText;
-    rerenderEntireTree(state);
-};
-export const addMessage = () => {
-    let newMessage = {
-        id:1, message: state.messagesPage.newMessageText,
-        date:"23:50",
-        from:'my-message'
-    };
-    state.messagesPage.messages.push(newMessage);
-};
-export const updateNewMessageText = (newText) => {
-    state.messagesPage.newMessageText = newText;
-    rerenderEntireTree(state);
-};
-export const subscribe = (observer) => {
-    rerenderEntireTree = observer;
-};
-export default state;
+
+
+
+
+export default store;
