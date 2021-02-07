@@ -6,19 +6,17 @@ import img from './imgs/new-user.jpg';
 
 
 export default function Dialogs(props) {
-    console.log(props);
     const newPostElement = React.createRef();
 
     function onTextChange() {
         const text = newPostElement.current.value;
-        props.updateNewMessageText(text);
+        props.dispatch({type:'UPDATE-NEW-MESSAGE-TEXT', newText: text});
     }
     function addNewMessage() {
         const text = newPostElement.current.value;
-        props.updateNewMessageText(text);
-        props.addMessage(text);
-        props.updateNewMessageText('')
-
+        props.dispatch({type:'UPDATE-NEW-MESSAGE-TEXT', newText: text});
+        props.dispatch({type:'ADD-MESSAGE', newText: text});
+        props.dispatch({type:'UPDATE-NEW-MESSAGE-TEXT', newText: ''});
     }
 
     return (

@@ -11,8 +11,7 @@ export default function Content(props) {
                    newPostsText={
                        props.profilePage.newPostText
                    }
-                   updateNewPostText={props.updateNewPostText}
-                   addPost={props.addPost}/>
+                   dispatch={props.dispatch}/>
         </section>
     )
 }
