@@ -3,6 +3,7 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import './Dialogs.css';
 import img from './imgs/new-user.jpg';
+import {addMessageActionCreate, onTextChangeActionCreate} from "../../redux/state";
 
 
 export default function Dialogs(props) {
@@ -10,13 +11,14 @@ export default function Dialogs(props) {
 
     function onTextChange() {
         const text = newPostElement.current.value;
-        props.dispatch({type:'UPDATE-NEW-MESSAGE-TEXT', newText: text});
+        const action = onTextChangeActionCreate(text);
+        props.dispatch(action);
     }
     function addNewMessage() {
         const text = newPostElement.current.value;
-        props.dispatch({type:'UPDATE-NEW-MESSAGE-TEXT', newText: text});
-        props.dispatch({type:'ADD-MESSAGE', newText: text});
-        props.dispatch({type:'UPDATE-NEW-MESSAGE-TEXT', newText: ''});
+        props.dispatch(onTextChangeActionCreate(text));
+        props.dispatch(addMessageActionCreate(text));
+        props.dispatch(onTextChangeActionCreate(''));
     }
 
     return (

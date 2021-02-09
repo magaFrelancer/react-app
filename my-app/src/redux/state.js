@@ -1,4 +1,8 @@
 // import {act} from "@testing-library/react";
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const ADD_MESSAGE = 'ADD-MESSAGE';
+const UPDATE_NEW_MESSAGE_TEXT = 'UPDATE-NEW-MESSAGE-TEXT';
 let store = {
     _state: {
         profilePage: {
@@ -53,7 +57,7 @@ let store = {
         this._callSubscriber = observer;
     },
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
+        if (action.type === ADD_POST) {
             let newPost = {
                 id: 5,
                 message: this._state.profilePage.newPostText,
@@ -63,18 +67,18 @@ let store = {
             this._state.profilePage.posts.push(newPost);
             this._state.profilePage.newPostText = '';
             this._callSubscriber(this._state);
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
 
             this._state.profilePage.newPostText = action.newText;
             this._callSubscriber(this._state);
-        } else if (action.type === 'ADD-MESSAGE') {
+        } else if (action.type === ADD_MESSAGE) {
             let newMessage = {
                 id: 1, message: this._state.messagesPage.newMessageText,
                 date: "23:50",
                 from: 'my-message'
             };
             this._state.messagesPage.messages.push(newMessage);
-        } else if (action.type === 'UPDATE-NEW-MESSAGE-TEXT') {
+        } else if (action.type === UPDATE_NEW_MESSAGE_TEXT) {
             this._state.messagesPage.newMessageText = action.newText;
             this._callSubscriber(this._state);
         }
@@ -82,4 +86,11 @@ let store = {
 };
 
 
+export const addPostActionCreate = () => ({type: ADD_POST});
+export const updateNewPosText = (text) => ({type: UPDATE_NEW_POST_TEXT, newText: text});
+export const onTextChangeActionCreate = (text) => ({
+    type: UPDATE_NEW_MESSAGE_TEXT, newText: text});
+export const addMessageActionCreate = (text) => ({
+    type: ADD_MESSAGE, newText: text
+});
 export default store;
