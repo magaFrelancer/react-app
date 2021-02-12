@@ -3,30 +3,28 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import './Dialogs.css';
 import img from './imgs/new-user.jpg';
-import {addMessageActionCreate, onTextChangeActionCreate} from "../../redux/state";
+import {sendMessageCreator, updateNewMessageTextCreator} from "../../redux/dialogs-reducer";
+
 
 
 export default function Dialogs(props) {
-    const newPostElement = React.createRef();
+    const state = props.store.getState().messagesPage;
+    const newMessageBody = state.newMessageBody;
 
-    function onTextChange() {
-        const text = newPostElement.current.value;
-        const action = onTextChangeActionCreate(text);
-        props.dispatch(action);
-    }
-    function addNewMessage() {
-        const text = newPostElement.current.value;
-        props.dispatch(onTextChangeActionCreate(text));
-        props.dispatch(addMessageActionCreate(text));
-        props.dispatch(onTextChangeActionCreate(''));
-    }
 
+    function onSendMessageClick() {
+        props.dispatch(sendMessageCreator());
+    }
+    function onNewMessageChange(e) {
+        const body = e.target.value;
+        props.dispatch(updateNewMessageTextCreator(body));
+    }
     return (
         <section className="dialogs">
             <div className="dialogs__dialogs-block">
                 <h1 className="dialogs__menu-title">Dialogs</h1>
                 <ul className="dialogs__menu">
-                    {props.state.dialogs.map((item, index) => (
+                    {state.dialogs.map((item, index) => (
                         <DialogItem name={item.name} id={item.id} key={index}/>
                     ))}
                 </ul>
@@ -41,7 +39,7 @@ export default function Dialogs(props) {
                     </div>
                 </div>
                 <div className="message-block__window">
-                    {props.state.messages.map((item, index) => (
+                    {state.messages.map((item, index) => (
                         <Message from={item.from}
                                  message={item.message}
                                  date={item.date}
@@ -50,9 +48,9 @@ export default function Dialogs(props) {
                     ))}
                 </div>
                 <div className="message-block__inputs">
-                    <textarea onChange={onTextChange} ref={newPostElement} className="message-block__new-message"
-                              placeholder="Message..." value={props.state.newMessageText}/>
-                    <button onClick={addNewMessage} className="message-block__add-new-message">Send</button>
+                    <textarea onChange={onNewMessageChange}  className="message-block__new-message"
+                              placeholder="Message..." value={newMessageBody}/>
+                    <button onClick={onSendMessageClick} className="message-block__add-new-message">Send</button>
                 </div>
 
             </div>

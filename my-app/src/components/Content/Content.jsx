@@ -7,11 +7,9 @@ export default function Content(props) {
     return (
         <section className="section">
             <ProfileInfo/>
-            <Posts posts={props.profilePage.posts}
-                   newPostsText={
-                       props.profilePage.newPostText
-                   }
-                   dispatch={props.dispatch}/>
+            <Posts store={props.store}
+                   dispatch={props.dispatch}
+            />
         </section>
     )
 }

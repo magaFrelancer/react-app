@@ -1,31 +1,31 @@
 import React from 'react';
 import './Posts.css';
 import MyPosts from "./MyPosts/MyPosts";
-import {addPostActionCreate, updateNewPosText} from "../../../redux/state";
+import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/content-reducer";
+
 
 
 
 export default function Posts(props) {
-    const newPostElement = React.createRef();
-
+    const state = props.store.getState().profilePage;
+    const newPostText = state.newPostText;
     const addPost = () => {
-        props.dispatch(addPostActionCreate())
+        props.dispatch(addPostActionCreator())
     };
-    const onPostChange = () => {
-        let text = newPostElement.current.value;
-        let action = updateNewPosText(text);
-        props.dispatch(action)
+    const onPostChange = (e) => {
+        let text = e.target.value;
+        props.dispatch(updateNewPostTextActionCreator(text));
     };
     return (
         <div>
             <div className="section__inputs">
                 <div className="section__inputs-title" >My posts</div>
-                <textarea onChange={onPostChange} ref={newPostElement} className="section__inputs-textarea" placeholder="Текст..." value={props.newPostsText}/>
+                <textarea onChange={onPostChange}  className="section__inputs-textarea" placeholder="Текст..." value={newPostText}/>
                 <button className="section__inputs-button" onClick={addPost}>Send Post</button>
             </div>
             <div className="section__posts">
                 {
-                    props.posts.map((item, index) => (<MyPosts message={item.message} date={item.date} key={index}/>))
+                    state.posts.map((item, index) => (<MyPosts message={item.message} date={item.date} key={index}/>))
                 }
             </div>
         </div>
